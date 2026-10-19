@@ -1,0 +1,203 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b1220" />
+  <meta name="description" content="The First Target | خطتك الدراسية تبدأ من هنا" />
+  <title>The First Target | خطتك الدراسية تبدأ من هنا</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<div id="landingScreen" class="screen landing-screen">
+  <header class="site-header container">
+    <a class="brand" href="#" onclick="showLanding();return false;">
+      <img src="assets/The First Target.png" alt="شعار The First Target" />
+      <span><b>THE FIRST TARGET</b><small>خطتك الدراسية تبدأ من هنا</small></span>
+    </a>
+    <button class="btn btn-ghost" onclick="showAuth('login')">تسجيل الدخول</button>
+  </header>
+
+  <main class="landing-main container">
+    <section class="hero-copy">
+      <span class="pill">منصة لتنظيم المذاكرة</span>
+      <h1>The First Target</h1>
+      <h2>خطتك الدراسية تبدأ من هنا</h2>
+      <p>منصة تساعد الطالب على تنظيم وقت المذاكرة، بناء خطة شخصية، متابعة الإنجاز، واختيار طريقة مناسبة للمذاكرة لكل مادة.</p>
+      <div class="hero-actions">
+        <button class="btn btn-primary" onclick="showAuth('register')">ابدأ الآن</button>
+        <button class="btn btn-ghost" onclick="showAuth('login')">لدي حساب بالفعل</button>
+      </div>
+      <div class="feature-strip">
+        <span>✓ خطة شخصية</span><span>✓ جلسات تركيز</span><span>✓ تقدم واضح</span><span>✓ مذاكرة منظمة</span>
+      </div>
+    </section>
+
+    <section class="hero-panel">
+      <div class="orbit"></div>
+      <img src="assets/The First Target.png" alt="The First Target" class="hero-logo" />
+      <div class="mini-dashboard">
+        <div><span>مهام اليوم</span><strong>06</strong></div>
+        <div><span>المكتمل</span><strong>03</strong></div>
+        <div><span>وقت الدراسة</span><strong>120 د</strong></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div id="authScreen" class="screen auth-screen hidden">
+  <div class="auth-card">
+    <button class="back-link" onclick="showLanding()">← العودة للرئيسية</button>
+    <div class="brand brand-center">
+      <img src="assets/The First Target.png" alt="شعار The First Target" />
+      <span><b>THE FIRST TARGET</b><small>خطتك الدراسية تبدأ من هنا</small></span>
+    </div>
+    <h2 id="authTitle">تسجيل الدخول</h2>
+    <p id="authSubtitle">اختر طريقة الدخول المناسبة لك.</p>
+    <button class="google-btn" onclick="googleLogin()"><span>G</span> الدخول باستخدام Google</button>
+    <div class="divider"><span>أو بالبريد الإلكتروني</span></div>
+    <form id="authForm">
+      <div id="nameField" class="field hidden"><label for="authName">الاسم الكامل</label><input id="authName" type="text" placeholder="اكتب اسمك" /></div>
+      <div class="field"><label for="authEmail">البريد الإلكتروني</label><input id="authEmail" type="email" placeholder="example@email.com" required /></div>
+      <div class="field"><label for="authPassword">كلمة المرور</label><input id="authPassword" type="password" placeholder="********" required /></div>
+      <button class="btn btn-primary full" id="authSubmit" type="submit">تسجيل الدخول</button>
+    </form>
+    <div class="switch-auth"><span id="switchText">ليس لديك حساب؟</span> <button onclick="toggleAuthMode()">إنشاء حساب</button></div>
+  </div>
+</div>
+
+<div id="setupScreen" class="screen setup-screen hidden">
+  <div class="setup-card">
+    <div class="setup-top"><span id="setupStepLabel">الخطوة 1 من 4</span><b>إعداد حسابك</b></div>
+    <div class="setup-progress"><span id="setupProgressBar"></span></div>
+    <h1 id="setupTitle">أولًا، ما اسمك؟</h1>
+    <p id="setupDescription">سنستخدم هذه البيانات لبناء خطة مناسبة لك.</p>
+    <div id="setupContent"></div>
+    <div class="setup-actions"><button class="btn btn-ghost" id="setupBackBtn" onclick="setupBack()">رجوع</button><button class="btn btn-primary" id="setupNextBtn" onclick="setupNext()">التالي</button></div>
+  </div>
+</div>
+
+<div id="appScreen" class="screen app-screen hidden">
+  <header class="app-header">
+    <div class="container app-head-inner">
+      <a class="brand" href="#" onclick="navigate('home');return false;">
+        <img src="assets/The First Target.png" alt="شعار The First Target" />
+        <span><b>THE FIRST TARGET</b><small id="headerStudentName">خطتك الدراسية</small></span>
+      </a>
+      <div class="head-actions"><button class="icon-btn sidebar-toggle" id="sidebarToggle" onclick="toggleSidebar()" aria-label="إخفاء القائمة" aria-expanded="true" title="إخفاء القائمة">☰</button><button class="icon-btn" onclick="requestNotifications()" title="التنبيهات">🔔</button><button class="icon-btn" onclick="logout()" title="تسجيل الخروج">↪</button></div>
+    </div>
+  </header>
+
+  <div class="app-layout container">
+    <aside class="sidebar">
+      <nav>
+        <button data-view="home" onclick="navigate('home')">🏠 الرئيسية</button>
+        <button data-view="schedule" onclick="navigate('schedule')">📅 الجدول</button>
+        <button data-view="subjects" onclick="navigate('subjects')">📚 المواد</button>
+        <button data-view="progress" onclick="navigate('progress')">📊 التقدم</button>
+        <button data-view="profile" onclick="navigate('profile')">👤 حسابي</button>
+        <button data-view="guide" onclick="navigate('guide')">❔ طريقة استخدام الموقع</button>
+      </nav>
+      <div class="sidebar-note"><b>هدفك الأول</b><span>نظّم وقتك، ابدأ، واستمر.</span></div>
+    </aside>
+
+    <main class="main-content">
+      <section id="view-home" class="view">
+        <div class="page-title"><div><span class="eyebrow">لوحة المتابعة</span><h1 id="welcomeTitle">مرحبًا 👋</h1><p id="todayDate"></p></div><button class="btn btn-primary" onclick="generatePlan()">إعادة بناء الخطة</button></div>
+        <div class="stats-grid">
+          <div class="stat-card"><span>مهام اليوم</span><strong id="statTasks">0</strong><i>📚</i></div>
+          <div class="stat-card"><span>المكتمل</span><strong id="statCompleted">0</strong><i>✓</i></div>
+          <div class="stat-card"><span>وقت الدراسة</span><strong id="statStudyTime">0 د</strong><i>⏱</i></div>
+          <div class="stat-card"><span>أيام الاستمرار</span><strong id="statStreak">0 🔥</strong><i>🎯</i></div>
+          <div class="stat-card"><span>وقت المذاكرة اليوم</span><strong id="statTodayStudy">0 د</strong><i>⏱</i></div>
+        </div>
+        <div class="content-grid two">
+          <div class="panel"><div class="panel-head"><h3>📅 خطة اليوم</h3><span id="todayProgressText">0%</span></div><div id="todayTasks"></div></div>
+          <div class="panel target-panel"><span class="eyebrow">🎯 أول هدف لليوم</span><h2>ابدأ بالخطوة الأولى</h2><div id="firstTargetBox">لم يتم تحديد الهدف بعد.</div><div class="progress"><span id="homeProgressBar"></span></div></div>
+        </div>
+      </section>
+
+      <section id="view-schedule" class="view hidden">
+        <div class="page-title"><div><span class="eyebrow">تنظيم الوقت</span><h1>📅 الجدول الدراسي</h1><p>خطة المذاكرة التي تم إنشاؤها لك.</p></div><button class="btn btn-primary" onclick="generatePlan()">إعادة بناء الخطة</button></div>
+        <div class="panel"><div id="scheduleList"></div></div>
+      </section>
+
+      <section id="view-subjects" class="view hidden">
+        <div class="page-title"><div><span class="eyebrow">المحتوى الدراسي</span><h1>📚 المواد</h1><p>المواد التي تدرسها حاليًا.</p></div><button class="btn btn-primary" onclick="addSubjectPrompt()">+ إضافة مادة</button></div>
+        <div class="panel"><div id="subjectsList"></div></div>
+      </section>
+
+      <section id="view-progress" class="view hidden">
+        <div class="page-title"><div><span class="eyebrow">متابعة الإنجاز</span><h1>📊 التقدم</h1><p>تابع تطورك في المذاكرة.</p></div></div>
+        <div class="stats-grid three"><div class="stat-card"><span>إجمالي المهام</span><strong id="progressTotal">0</strong></div><div class="stat-card"><span>إجمالي المنجز</span><strong id="progressDone">0</strong></div><div class="stat-card"><span>إجمالي وقت الدراسة</span><strong id="progressMinutes">0</strong></div></div>
+        <div class="panel"><div class="panel-head"><h3>المواد</h3></div><div id="subjectProgressList"></div></div>
+      </section>
+
+      <section id="view-profile" class="view hidden">
+        <div class="page-title"><div><span class="eyebrow">الإعدادات</span><h1>👤 حسابي</h1><p>بيانات الطالب وتفضيلات الدراسة.</p></div></div>
+        <div class="content-grid two">
+          <div class="panel"><h3>بيانات الطالب</h3><div class="field"><label>الاسم</label><input id="profileName"></div><div class="field"><label>العمر</label><input id="profileAge" type="number"></div><div class="field"><label>المرحلة الدراسية</label><input id="profileStage"></div><div class="field"><label>الصف الدراسي</label><input id="profileGrade"></div><button class="btn btn-primary" onclick="saveProfile()">حفظ التعديلات</button></div>
+          <div class="panel"><h3>تفضيلات المذاكرة</h3><div class="field"><label>ساعات المذاكرة اليومية</label><div class="range-row"><input id="profileHours" type="range" min="1" max="12" step=".5" oninput="document.getElementById('hoursValue').textContent=this.value+' ساعة'"><b id="hoursValue">3 ساعات</b></div></div><div class="field"><label>وقت البداية</label><input id="profileStart" type="time"></div><button class="btn btn-ghost" onclick="generatePlan()">إعادة حساب الخطة</button></div>
+        </div>
+      </section>
+
+      <section id="view-guide" class="view hidden">
+        <div class="page-title"><div><span class="eyebrow">دليل الاستخدام</span><h1>❔ طريقة استخدام الموقع</h1><p>دليل عملي لإعداد حسابك، تنظيم المواد، تنفيذ خطة المذاكرة، ومتابعة ما أنجزته.</p></div></div>
+        <div class="content-grid two">
+          <article class="panel">
+            <h3>1. إنشاء الحساب والبدء</h3>
+            <p>من الصفحة الرئيسية اختر «ابدأ الآن»، ثم أدخل بريدًا إلكترونيًا وكلمة مرور. بعد ذلك أكمل الإعداد الأولي بالترتيب:</p>
+            <ol><li>اكتب اسمك.</li><li>أدخل عمرك.</li><li>اختر المرحلة الدراسية ثم الصف.</li><li>أضف مادة واحدة على الأقل، ويمكنك إضافة مواد أخرى لاحقًا.</li></ol>
+            <p>عند إكمال الإعداد، ينشئ الموقع خطة أولية وينقلك إلى لوحة التحكم.</p>
+          </article>
+          <article class="panel">
+            <h3>2. قراءة لوحة التحكم</h3>
+            <p>تعرض الصفحة الرئيسية مهام تاريخ اليوم، وعدد المكتمل منها، وإجمالي وقت الدراسة المسجل، ووقت اليوم، ونسبة الإنجاز. قسم «أول هدف لليوم» يوضح أول مهمة غير مكتملة.</p>
+            <p>من زر «إعادة بناء الخطة» يمكنك إنشاء خطة جديدة. المهام المكتملة تُحفظ، بينما يعاد إنشاء المهام غير المكتملة من اليوم فصاعدًا.</p>
+          </article>
+          <article class="panel">
+            <h3>3. فهم الجدول الدراسي</h3>
+            <p>تُنشأ مهام يومية للمواد المختارة حتى نهاية السنة التقويمية الحالية. يوزع الموقع دقائق المذاكرة اليومية بالتساوي تقريبًا على المواد، ويعرض لكل مادة مهمة بمدة محددة.</p>
+            <p>زر «مذاكرة» متاح لمهمة اليوم فقط. أما المهام المستقبلية فتظل ظاهرة في الجدول، ويصبح بدء جلستها متاحًا في تاريخها.</p>
+          </article>
+          <article class="panel">
+            <h3>4. إدارة المواد</h3>
+            <p>من «المواد» أضف مادة أو عدّل اسمها وأولويتها وصعوبتها من 1 إلى 5. يعرض كل صف عدد المهام المنجزة من إجمالي مهام المادة.</p>
+            <p>لحذف مادة، استخدم زر الحذف بجوارها في قسم «المواد»؛ سيحذف معها كل مهامها. إضافة مادة جديدة تنشئ خطة محدثة.</p>
+          </article>
+          <article class="panel">
+            <h3>5. بدء جلسة المذاكرة</h3>
+            <p>ابدأ من زر «مذاكرة» بجوار مهمة اليوم أو المادة التي لها مهمة اليوم. يظهر عداد الجلسة، ويمكنك إيقافه مؤقتًا واستئنافه أو إنهاؤه، كما يمكنك تصغيره واستعادته. يحفظ المتصفح حالة العداد النشط عند إعادة تحميل الصفحة.</p>
+            <p>مدة الجلسة مرتبطة بمدة المهمة في الخطة، وليست دائمًا 25 دقيقة. يُضاف الوقت المنقضي إلى إجمالي وقت المذاكرة تلقائيًا أثناء الجلسة، وعند إنهائها توضع المهمة كمكتملة حتى لو أنهيتها قبل انتهاء العداد.</p>
+          </article>
+          <article class="panel">
+            <h3>6. البحث عن شرح أو مراجعة</h3>
+            <p>بعد بدء المذاكرة اختر نوع المنهج، نسخته، الترم، المرحلة، والصف، ثم حدد نوع المراجعة:</p>
+            <ul><li>المراجعة العادية: أدخل رقم الوحدة والدرس.</li><li>المراجعة الشهرية: اختر الشهر.</li><li>مراجعة نهاية الترم: اختر الترم الأول أو الثاني.</li></ul>
+            <p>يفتح الزر نتائج بحث على YouTube في تبويب جديد. الموقع لا يستضيف مكتبة فيديوهات تعليمية داخله.</p>
+          </article>
+          <article class="panel">
+            <h3>7. التقدم وإعدادات الحساب</h3>
+            <p>يعرض قسم «التقدم» إجمالي المهام والمكتمل منها ووقت الدراسة المسجل، مع نسبة الإنجاز لكل مادة. ومن «حسابي» يمكنك تعديل بيانات الطالب، وساعات المذاكرة اليومية من ساعة إلى 12 ساعة بنصف ساعة، ثم حفظ التعديلات وإعادة حساب الخطة.</p>
+          </article>
+          <article class="panel">
+            <h3>8. الحفظ والخصوصية وحدود النسخة الحالية</h3>
+            <p>تُحفظ البيانات في التخزين المحلي للمتصفح على هذا الجهاز، ولا تتم مزامنتها تلقائيًا مع أجهزة أخرى. تسجيل الدخول وإنشاء الحساب واجهتان محليتان وليسا نظام مصادقة حقيقيًا، وزر Google لا ينفذ تسجيل دخول عبر Google؛ لذلك لا تستخدم كلمة مرور حقيقية أو بيانات حساسة.</p>
+            <p>وقت البداية المحفوظ لا يحدد مواعيد داخل الجدول حاليًا. بطاقة أيام الاستمرار ظاهرة، لكن احتساب الأيام المتتالية غير مفعّل في النسخة الحالية.</p>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+
+<div id="studyModal" class="study-modal hidden" role="dialog" aria-modal="true"><div class="study-card"><div class="study-head"><div><span>📚 ابدأ المذاكرة</span><h2 id="studyModalSubject">مذاكرة المادة</h2></div><button class="study-close" onclick="closeStudyModal()" aria-label="إنهاء المذاكرة">×</button></div><div id="studyModalContent"></div><div id="studyMonitor" class="study-monitor hidden"><div><span class="study-live-dot"></span><b>وقت الجلسة</b><strong id="studyMonitorTime">00:00</strong></div><span class="muted">يبدأ احتساب الوقت من دخولك إلى المذاكرة، ويستمر حتى تنهي الجلسة.</span><button class="btn btn-danger" onclick="closeStudyModal()">إنهاء المذاكرة</button></div></div></div>
+
+<div id="timerModal" class="timer-modal hidden" aria-live="polite"><div class="timer-card" role="region" aria-label="عداد المذاكرة"><div class="timer-head"><div><span class="eyebrow">جلسة مذاكرة</span><h2 id="timerSubject">جلسة مذاكرة</h2></div><button class="timer-minimize" onclick="minimizeTimer()" aria-label="تصغير العداد" title="تصغير العداد">−</button></div><div class="timer-circle"><strong id="timerNumber">00:25:00</strong><span>الوقت المتبقي ويُضاف المنقضي تلقائيًا</span></div><p id="timerTask"></p><div class="timer-actions"><button class="btn btn-primary" onclick="toggleTimer()" id="timerToggleBtn">⏸ إيقاف</button><button class="btn btn-ghost" onclick="finishTimer()">✓ إنهاء</button><button class="btn btn-danger" onclick="minimizeTimer()">تصغير</button></div></div></div>
+<button id="timerDock" class="timer-dock hidden" onclick="restoreTimer()" aria-label="استعادة عداد المذاكرة"><span>⏱ العودة للعداد</span><strong id="timerDockTime">00:25:00</strong></button>
+<div id="toast" class="toast"></div>
+<script src="app.js"></script>
+</body>
+</html>
